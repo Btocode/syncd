@@ -48,7 +48,7 @@ jobs:
 
     - name: Run database migrations
       run: |
-        alembic upgrade head
+        uv run alembic upgrade head
       env:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
@@ -59,7 +59,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest
+        uv run pytest
       env:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
@@ -73,4 +73,4 @@ jobs:
 
     - name: Run linting
       run: |
-        pre-commit run --all-files
+        uv run pre-commit run --all-files
