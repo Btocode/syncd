@@ -60,7 +60,7 @@ jobs:
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         API_V1_STR: /api/v1
         PROJECT_NAME: SyncD Backend
-        CORS_ALLOWED_ORIGINS: "*"
+        CORS_ALLOWED_ORIGINS: '["http://localhost:3000"]'
 
     - name: Run tests
       run: |
@@ -74,7 +74,7 @@ jobs:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/syncd_test
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-        CORS_ALLOWED_ORIGINS: "*"
+        CORS_ALLOWED_ORIGINS: '["http://localhost:3000"]'
 
     - name: Run linting
       run: |
