@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: syncd-backend
+    env: python
+    buildCommand: curl -LsSf https://astral.sh/uv/install.sh | sh && uv venv && uv build
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: POSTGRES_HOST
+        sync: false
+      - key: POSTGRES_PORT
+        sync: false
+      - key: POSTGRES_DB
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: API_V1_STR
+        value: /api/v1
+      - key: PROJECT_NAME
+        value: SyncD Backend
+      - key: CORS_ALLOWED_ORIGINS
+        value: ["http://localhost:3000"]
