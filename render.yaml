@@ -4,9 +4,8 @@ services:
     env: python
     buildCommand: |
       curl -LsSf https://astral.sh/uv/install.sh | sh
-      export PATH="$HOME/.local/bin:$PATH"
-      uv venv
-      uv build
+      /opt/render/.local/bin/uv venv
+      /opt/render/.local/bin/uv build
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: POSTGRES_USER
