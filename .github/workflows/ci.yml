@@ -12,6 +12,8 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.10']
+    outputs:
+      success: ${{ steps.result.outputs.success }}
 
     services:
       postgres:
@@ -64,6 +66,7 @@ jobs:
         CORS_ALLOWED_ORIGINS: '["http://localhost:3000"]'
 
     - name: Run tests
+      id: test
       run: |
         uv run pytest
       env:
@@ -81,3 +84,13 @@ jobs:
       continue-on-error: true
       run: |
         uv run pre-commit run --all-files
+
+    - name: Set result
+      id: result
+      if: always()
+      run: |
+        if [ "${{ steps.test.outcome }}" == "success" ]; then
+          echo "success=true" >> $GITHUB_OUTPUT
+        else
+          echo "success=false" >> $GITHUB_OUTPUT
+        fi

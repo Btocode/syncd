@@ -1,15 +1,31 @@
 name: CD
 
 on:
-  push:
-    branches: [ main, master ]
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches: [main, master]
 
 jobs:
-  deploy:
+  check:
     runs-on: ubuntu-latest
-    needs: test
+    steps:
+      - name: Check CI result
+        id: check
+        run: |
+          if [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
+            echo "ci_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "ci_success=false" >> $GITHUB_OUTPUT
+          fi
+    outputs:
+      ci_success: ${{ steps.check.outputs.ci_success }}
 
+  deploy:
+    needs: check
+    if: needs.check.outputs.ci_success == 'true'
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
 
