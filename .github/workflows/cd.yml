@@ -30,7 +30,7 @@ jobs:
 
     - name: Run database migrations
       run: |
-        alembic upgrade head
+        uv run alembic upgrade head
       env:
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
