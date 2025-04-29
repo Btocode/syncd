@@ -27,6 +27,7 @@ jobs:
       run: |
         uv venv
         uv pip install -e .
+        uv pip install asyncpg
 
     - name: Run database migrations
       run: |
