@@ -38,6 +38,11 @@ jobs:
         POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        API_V1_STR: /api/v1
+        PROJECT_NAME: SyncD Backend
+        CORS_ALLOWED_ORIGINS: "*"
 
     - name: Deploy to Render
       env:
