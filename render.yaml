@@ -2,30 +2,34 @@ services:
   - type: web
     name: syncd-backend
     env: python
+    region: oregon  # Specify your preferred region
+    plan: free  # Or starter, standard, etc. based on your needs
     buildCommand: |
       python -m pip install --upgrade pip
       pip install -e .
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health  # Add a health check endpoint
+    autoDeploy: true  # Enable automatic deployments
     envVars:
       - key: POSTGRES_USER
-        sync: false
+        value: syncd_owner  # Set default value, can be overridden in dashboard
       - key: POSTGRES_PASSWORD
-        sync: false
+        sync: false  # Keep sensitive data in dashboard
       - key: POSTGRES_HOST
         sync: false
       - key: POSTGRES_PORT
-        sync: false
+        value: "5432"
       - key: POSTGRES_DB
-        sync: false
+        value: syncd
       - key: DATABASE_URL
-        sync: false
+        sync: false  # Keep sensitive data in dashboard
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_KEY
-        sync: false
+        sync: false  # Keep sensitive data in dashboard
       - key: API_V1_STR
         value: /api/v1
       - key: PROJECT_NAME
         value: SyncD Backend
       - key: CORS_ALLOWED_ORIGINS
-        value: ["http://localhost:3000"]
+        value: '["http://localhost:3000"]'
