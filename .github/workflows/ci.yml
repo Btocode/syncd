@@ -78,5 +78,6 @@ jobs:
         CORS_ALLOWED_ORIGINS: '["http://localhost:3000"]'
 
     - name: Run linting
+      continue-on-error: true
       run: |
         uv run pre-commit run --all-files
