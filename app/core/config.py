@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     SUPABASE_KEY: str
 
     # CORS settings
-    CORS_ALLOWED_ORIGINS: List[str] = ["http://localhost:3000"]
+    CORS_ALLOWED_ORIGINS: List[str] = ["http://localhost:1212"]
 
     class Config:
         env_file = ".env"
