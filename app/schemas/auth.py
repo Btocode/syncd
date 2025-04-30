@@ -15,7 +15,13 @@ class LoginSchema(BaseModel):
     email: EmailStr
     password: str
 
+class UserInfo(BaseModel):
+    user_id: str
+    email: EmailStr
+    display_name: str | None = None
+
 class TokenSchema(BaseModel):
+    user_info: UserInfo
     access_token: str
     refresh_token: str
     token_type: str = "bearer"

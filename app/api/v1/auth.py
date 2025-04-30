@@ -10,7 +10,7 @@ from app.core.app_logging import logger
 from app.core.security import create_access_token, create_refresh_token, get_password_hash, verify_password
 from app.db.database import get_session
 from app.db.models import User
-from app.schemas.auth import LoginSchema, SignupSchema, TokenSchema
+from app.schemas.auth import LoginSchema, SignupSchema, TokenSchema, UserInfo
 from app.services.supabase import supabase
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -48,10 +48,16 @@ async def signup(
         # Generate token
         access_token = create_access_token(data={"sub": new_user.user_id})
         refresh_token = create_refresh_token(data={"sub": new_user.user_id})
+
         return TokenSchema(
             access_token=access_token,
             refresh_token=refresh_token,
-            token_type="bearer"
+            token_type="bearer",
+            user_info={
+                "user_id": new_user.user_id,
+                "email": new_user.email,
+                "display_name": new_user.display_name
+            }
         )
     except HTTPException:
         raise
@@ -83,6 +89,11 @@ async def login(
         access_token = create_access_token(data={"sub": user.user_id})
         refresh_token = create_refresh_token(data={"sub": user.user_id})
         return TokenSchema(
+            user_info=UserInfo(
+                user_id=user.user_id,
+                email=user.email,
+                display_name=user.display_name
+            ),
             access_token=access_token,
             refresh_token=refresh_token,
             token_type="bearer"
