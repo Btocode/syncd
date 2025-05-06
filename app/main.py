@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.auth import router as auth_router
 from app.api.v1.device import router as device_router
 from app.core.config import settings
+from fastapi.responses import Response
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -24,8 +25,12 @@ app.include_router(device_router, prefix=settings.API_V1_STR)
 
 # Health check endpoint
 @app.get("/api/v1/health")
-async def health_check():
-    return {"status": "ok"}
+async def health_check_get():
+    return Response(status_code=200)
+
+@app.head("/api/v1/health")
+async def health_check_head():
+    return Response(status_code=200)
 
 # Root endpoint
 @app.get("/")
